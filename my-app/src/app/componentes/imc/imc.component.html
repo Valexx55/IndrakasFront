@@ -1,0 +1,10 @@
+<p>imc works!</p>
+<p>{{titulo}}</p>
+<p>a ve como tas de goldo</p>
+<p>que pesas? (kg): <input type="number" [(ngModel)]="oimc.peso"></p>
+<p>que mides? (m): <input type="number" [(ngModel)]="oimc.altura"></p>
+<button (click)="calcularImc()">Calcular</button>
+<p>IMC: <span>{{oimc.numerico}}</span></p>
+<p>Lectura: <span>{{oimc.lectura}}</span></p>
+<div *ngIf="oimc.foto!=''"><img [src]="oimc.foto"></div>
+<!-- <div *ngIf="oimc.foto!=''"><img src={{oimc.foto}}></div> -->

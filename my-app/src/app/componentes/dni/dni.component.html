@@ -1,0 +1,7 @@
+<p>dni works!</p>
+<p>{{titutlo}}</p>
+<input type="number" placeholder="intro su numero dni" [(ngModel)]="numero">
+<button (click)="calcularLetra()">CALCULAR LETRA</button>
+<div *ngIf="letra!=''">
+    SU letra es {{letra}}
+</div>
