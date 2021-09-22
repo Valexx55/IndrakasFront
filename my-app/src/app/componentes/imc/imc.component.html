@@ -4,7 +4,28 @@
 <p>que pesas? (kg): <input type="number" [(ngModel)]="oimc.peso"></p>
 <p>que mides? (m): <input type="number" [(ngModel)]="oimc.altura"></p>
 <button (click)="calcularImc()">Calcular</button>
-<p>IMC: <span>{{oimc.numerico}}</span></p>
+<p>IMC num: <span>{{oimc.numerico}}</span></p>
+<p>IMC nominal: <span>{{oimc.nominal}}</span></p>
 <p>Lectura: <span>{{oimc.lectura}}</span></p>
 <div *ngIf="oimc.foto!=''"><img [src]="oimc.foto"></div>
-<!-- <div *ngIf="oimc.foto!=''"><img src={{oimc.foto}}></div> -->
+<div *ngIf="array_imc && array_imc.length >0"> 
+    <table>
+        <thead>
+            <th>Peso</th>
+            <th>Altura</th>
+            <th>Númerico</th>
+            <th>Imagen</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let auxImc of array_imc">
+                <td>{{auxImc.peso}}</td>
+                <td>{{auxImc.altura}}</td>
+                <td>{{auxImc.numerico}}</td>
+                <td><img [src]="auxImc.foto" alt=""></td>
+            </tr>
+        </tbody>
+    </table>
+    <button (click)="ordenarPorPeso()"> ORDENAR POR PESO</button>
+    <button (click)="ordenarPorAlutra()"> ORDENAR POR ALTURA</button><br>
+    <button (click)="limpiar()">LIMPIAR</button>
+</div>
