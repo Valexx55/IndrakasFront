@@ -44,14 +44,34 @@ export class ImcComponent implements OnInit {
 
   mostrarArray ()
   {
-    for (let eimc of this.array_imc)
+    
+    //forEach
+    //map
+    //filter
+
+    /**
+     * 
+     * 1.- obtener la media del peso
+     * 2.- obtener la media del altura
+     * 3.- array sólo con obesos
+     * 4.- un array nuevo, con todos con un kilo de más (copia)
+     * 5.- el mismo array original, con todos con un kilo de más (this)
+     */
+
+
+    console.log("FOR EACH");
+    this.array_imc.forEach( e => console.log(e.toString()));
+
+    /*for (let eimc of this.array_imc)
     {
+      console.log("Tipo imc = " + Tipoimc[eimc.nominal]);
+      console.log("tostring " + eimc.toString());
       console.log(`ALTURA ${eimc.altura}`);
       console.log(`PESO ${eimc.peso}`);
       console.log(`IMC num ${eimc.numerico}`);
       console.log(`IMC nom ${eimc.nominal}`);
       console.log(`FOTO ${eimc.foto}`);
-    }
+    }*/
   }
 
   nuevoItemArray (oimc:Imc) : Imc
@@ -77,27 +97,27 @@ export class ImcComponent implements OnInit {
       console.log(imcx);
       //COMENTARIO
       if (imcx < 16) {
-        this.oimc.lectura = "el cejas te puede";
+        this.oimc.lectura = Tipoimc[Tipoimc.DESNUTRIDO]; // "el cejas te puede";
         this.oimc.foto = ImcComponent.FOTO_DESNUTRIDO;
         this.oimc.nominal = Tipoimc.DESNUTRIDO;
       }
       else if (imcx >= 16 && imcx < 18) {
-        this.oimc.lectura = "el cejas no te puede";
+        this.oimc.lectura = Tipoimc[Tipoimc.DELGADO];//"el cejas no te puede";
         this.oimc.foto = ImcComponent.FOTO_DELGADO;
         this.oimc.nominal = Tipoimc.DELGADO;
       }
       else if (imcx >= 18 && imcx < 25) {
-        this.oimc.lectura = "no te vendria mal comer mas fruta";
+        this.oimc.lectura = Tipoimc[Tipoimc.IDEAL];//"no te vendria mal comer mas fruta";
         this.oimc.foto = ImcComponent.FOTO_IDEAL;
         this.oimc.nominal = Tipoimc.IDEAL;
       }
       else if (imcx >= 25 && imcx < 31) {
-        this.oimc.lectura = "tas gordito eh";
+        this.oimc.lectura =  Tipoimc[Tipoimc.SOBREPESO];//"tas gordito eh";
         this.oimc.foto = ImcComponent.FOTO_SOBREPESO;
         this.oimc.nominal = Tipoimc.SOBREPESO;
       }
       else if (imcx > 31) {
-        this.oimc.lectura = "menos phoskitos ibai";
+        this.oimc.lectura = Tipoimc[Tipoimc.OBESO];//"menos phoskitos ibai";
         this.oimc.foto = ImcComponent.FOTO_OBESO;
         this.oimc.nominal = Tipoimc.OBESO;
       }

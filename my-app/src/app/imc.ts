@@ -2,9 +2,6 @@ import { Tipoimc } from "./tipoimc";
 
 export class Imc {
 
-
-   
-
     public peso : number;
     public altura : number;
     public foto : string;
@@ -14,11 +11,16 @@ export class Imc {
 
     constructor ()
     {
-        this.peso=0;
-        this.altura=0;
+        this.peso=80;
+        this.altura=1.80;
         this.foto="";
         this.nominal = Tipoimc.DELGADO;
         this.numerico =0;
         this.lectura = "";
+    }
+
+    public toString () : string  
+    {
+        return (this.altura + " " + this.peso + " "+Tipoimc[this.nominal]);
     }
 }
