@@ -42,6 +42,67 @@ export class ImcComponent implements OnInit {
   }
 
 
+  mediaPeso (aimc:Array<Imc>):number
+  {
+    let media:number = 0;
+    let total: number = 0;
+
+      aimc.forEach(e => { total = total + e.peso})
+      media = total/aimc.length;
+
+    return media;
+  }
+
+  mediaAltura (aimc:Array<Imc>):number
+  {
+    let media:number = 0;
+    let total: number = 0;
+      
+      aimc.forEach(e => { total = total + e.altura})
+      media = total/aimc.length;
+
+    return media;
+  }
+
+  filtrarObesos (aimc:Array<Imc>):Array<Imc>
+  {
+    let animc:Array<Imc> = new Array<Imc>();
+
+      animc = aimc.filter ( e => e.numerico>=31);
+
+    return animc;
+  }
+
+  transformarMas1KG (aimc:Array<Imc>):Array<Imc>
+  {
+    let animc:Array<Imc> = new Array<Imc>(aimc.length);
+
+        aimc.forEach ( (e, pos) => {
+          let imcn = new Imc();
+          imcn.peso = e.peso+1;
+          imcn.numerico = e.numerico;
+          imcn.altura = e.altura;
+          imcn.foto = e.foto;
+          imcn.nominal = e.nominal;
+          imcn.lectura = e.lectura;
+          animc[pos] = imcn;
+        }
+          );
+
+    return animc;
+  }
+
+  transformarMas1KGOriginal (aimc:Array<Imc>)
+  {
+    let animc:Array<Imc> = new Array<Imc>();
+
+      aimc.map ( (e, pos, amap) => {e.peso = e.peso+1; amap[pos] = e;});
+
+  }
+
+  //AL FLORIN
+  //arrayNuevo = this.arrayIMC.filter(object => object.peso+=1);
+
   mostrarArray ()
   {
     
@@ -61,7 +122,13 @@ export class ImcComponent implements OnInit {
 
     console.log("FOR EACH");
     this.array_imc.forEach( e => console.log(e.toString()));
-
+    console.log("MEDIA PESO = " + this.mediaPeso (this.array_imc));
+    console.log("MEDIA ALTURA = " + this.mediaAltura (this.array_imc));
+    console.log("SOLO OBESOS = " + this.filtrarObesos (this.array_imc));
+    console.log("MÁS 1 KG = " + this.transformarMas1KG (this.array_imc));
+    console.log("MÁS 1 KG THIS = ");
+    this.transformarMas1KGOriginal(this.array_imc);
+    
     /*for (let eimc of this.array_imc)
     {
       console.log("Tipo imc = " + Tipoimc[eimc.nominal]);
