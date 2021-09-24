@@ -37,15 +37,24 @@ export class AlumnoComponent implements OnInit {
     //yo me suscribo al observable
     //y cuando el observable cambie de estado - la lista está disponible 
     //se invoca al método suscribe
-    this.servicio.listar().subscribe(
+    /*this.servicio.listar().subscribe(
       alumnos => {
         console.log(alumnos);
         this.listaAlumnos = alumnos;
       }
-      , fallo => {alert ("Fallo del servidor"); console.error(fallo)});
-      
+      , fallo => {alert ("Fallo del servidor"); console.error(fallo)});*/
      //suscribirnos observadores
 
+     this.servicio.listarConHttpCompleto().subscribe(
+      httpresp => {
+        console.log(httpresp.status);
+        this.listaAlumnos = <Alumno[]>httpresp.body;//casting
+        //console.log(alumnos);
+        //this.listaAlumnos = alumnos;
+      }
+      , fallo => {alert ("Fallo del servidor"); console.error(fallo)});
+     //suscribirnos observadores
+  }
   }
 
-}
+
