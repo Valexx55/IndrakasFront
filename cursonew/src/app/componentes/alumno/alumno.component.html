@@ -12,7 +12,8 @@
                     <th>APELLIDO</th>
                     <th>CORREO</th>
                     <th>EDAD</th>
-                    <th>CREADO EN</th>
+                    <th>FECHA</th>
+                    <th>HORA</th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let alumno of listaAlumnos">
@@ -21,7 +22,11 @@
                         <td>{{alumno.apellido}}</td>
                         <td>{{alumno.email}}</td>
                         <td>{{alumno.edad}}</td>
-                        <td>{{alumno.creadoEn}}</td>
+                        <!-- tubería para el formato de fecha-->
+                        <!-- <td>{{alumno.creadoEn | date: 'yyyy/MM/dd' }}</td> -->
+                        <!-- <td>{{alumno.creadoEn | date: 'MMMM d, y, h:mm:ss a z' }}</td> -->
+                        <td>{{alumno.creadoEn | date: 'shortDate' }}</td>
+                        <td>{{alumno.creadoEn | date: 'shortTime' }}</td>
                     </tr>
                 </tbody>
             </table>

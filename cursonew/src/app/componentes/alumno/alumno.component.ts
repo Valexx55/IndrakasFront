@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { Alumno } from 'src/app/modelo/alumno';
 import { AlumnoserviceService } from 'src/app/servicios/alumnoservice.service';
@@ -5,7 +6,8 @@ import { AlumnoserviceService } from 'src/app/servicios/alumnoservice.service';
 @Component({
   selector: 'app-alumno',
   templateUrl: './alumno.component.html',
-  styleUrls: ['./alumno.component.css']
+  styleUrls: ['./alumno.component.css'], 
+ // providers: [AlumnoserviceService]
 })
 //COMPONENTE DEDICADO A LISTAR LOS ALUMNOS
 export class AlumnoComponent implements OnInit {
@@ -38,8 +40,11 @@ export class AlumnoComponent implements OnInit {
     this.servicio.listar().subscribe(
       alumnos => {
         console.log(alumnos);
+        this.listaAlumnos = alumnos;
       }
-    ); //suscribirnos observadores
+      , fallo => {alert ("Fallo del servidor"); console.error(fallo)});
+      
+     //suscribirnos observadores
 
   }
 

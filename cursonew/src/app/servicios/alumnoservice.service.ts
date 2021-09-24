@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Alumno } from '../modelo/alumno';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root'//que se pueda usar desde cualquier componente
 })
 export class AlumnoserviceService {
 
