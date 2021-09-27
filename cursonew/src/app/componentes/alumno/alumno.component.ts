@@ -6,23 +6,26 @@ import { AlumnoserviceService } from 'src/app/servicios/alumnoservice.service';
 @Component({
   selector: 'app-alumno',
   templateUrl: './alumno.component.html',
-  styleUrls: ['./alumno.component.css'], 
- // providers: [AlumnoserviceService]
+  styleUrls: ['./alumno.component.css'],
+  // providers: [AlumnoserviceService]
 })
 //COMPONENTE DEDICADO A LISTAR LOS ALUMNOS
 export class AlumnoComponent implements OnInit {
 
-  listaAlumnos : Alumno[];
-  titulo : string = "LISTADO DE ALUMNOS";
+  listaAlumnos: Alumno[];
+  titulo: string = "LISTADO DE ALUMNOS";
+  automatico: boolean;
+  idinterval: any;
 
   //INYECCIÓN DE SERVICIOS
-  constructor(public servicio : AlumnoserviceService) { 
+  constructor(public servicio: AlumnoserviceService) {
     this.listaAlumnos = [];
+    this.automatico = false;
   }
 
   ngOnInit(): void {
 
-    
+
     /*let a1 : Alumno;
     a1 = new Alumno();
 
@@ -43,18 +46,70 @@ export class AlumnoComponent implements OnInit {
         this.listaAlumnos = alumnos;
       }
       , fallo => {alert ("Fallo del servidor"); console.error(fallo)});*/
-     //suscribirnos observadores
+    //suscribirnos observadores
 
-     this.servicio.listarConHttpCompleto().subscribe(
+    this.servicio.listarConHttpCompleto().subscribe(
       httpresp => {
         console.log(httpresp.status);
         this.listaAlumnos = <Alumno[]>httpresp.body;//casting
         //console.log(alumnos);
         //this.listaAlumnos = alumnos;
       }
-      , fallo => {alert ("Fallo del servidor"); console.error(fallo)});
-     //suscribirnos observadores
+      , fallo => { alert("Fallo del servidor"); console.error(fallo) });
+    //suscribirnos observadores
   }
+
+
+  checkTocado() {
+
+    this.automatico = !this.automatico;
+    console.log("check tocado auto = " + this.automatico);
+    if (this.automatico) {
+      this.programarActualizacionAtutomatica();
+    } else {
+      this.desprogramarActualizacionAutomatica();
+    }
   }
+
+  programarActualizacionAtutomatica() {
+    this.idinterval = setInterval(() => {
+      console.log("actualizando ...");
+      this.servicio.listar().subscribe
+        (
+          alumnos => { this.listaAlumnos = alumnos; }
+          ,
+          error => { console.log(error); alert(error) }
+        );
+    }, 3000); //this en una f() anónima es el ámbito que lo engloba (superior)
+    //this.idinterval = setInterval ( function () { console.log("actualizando ...");}, 3000);
+  }
+
+
+  eliminar(alumno: Alumno): void {
+    console.log("quiere eliminar a " + alumno.nombre);
+    if (confirm("¿Quieres eliminar a " + alumno.nombre)) {
+      //sí
+      this.servicio.eliminar(alumno.id).subscribe(() => {
+        //ACTUALIZAR LA LISTA
+        this.listaAlumnos = this.listaAlumnos.filter(a => a.id != alumno.id);
+        alert("Alumno elminado con éxito");
+      }, error => { console.error(error); })
+    } else {
+      //no quiere elininarlo
+      console.log("el usuario no confirma el borrrado");
+    }
+  }
+
+  desprogramarActualizacionAutomatica() {
+    clearInterval(this.idinterval);
+  }
+
+  ngOnDestroy() {
+    console.log("saliendo ...");
+    if (this.idinterval) {
+      clearInterval(this.idinterval);
+    }
+  }
+}
 
 

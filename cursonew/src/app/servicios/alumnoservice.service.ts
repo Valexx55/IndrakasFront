@@ -24,6 +24,11 @@ export class AlumnoserviceService {
    //Promesas 
    //observado
 
+
+   public getAlumno(id: number) : Observable<HttpResponse<Alumno>>{
+    return this.http.get<Alumno>(`${this.ruta_servidor}/${id}`,{ observe: 'response' });
+  }
+
   //obtener lista de alumnos
    public listar () : Observable<Alumno[]>
     {

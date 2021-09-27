@@ -3,6 +3,7 @@
         
     </div>
     <div class="card-body">
+        <button class="btn btn-primary btn-sm">CREAR</button>
         <div class="alert alert-info" *ngIf="listaAlumnos && listaAlumnos.length==0">
             NO HAY ALUMNOS EN EL SISTEMA
         </div>
@@ -32,11 +33,16 @@
                         <td>{{alumno.creadoEn | date: 'shortDate' }}</td>
                         <td>{{alumno.creadoEn | date: 'shortTime' }}</td>
                         <td><button class="btn btn-secondary btn-sm">EDITAR</button></td>
-                        <td><button class="btn btn-danger btn-sm">ELIMINAR</button></td>
+                        <td><button class="btn btn-danger btn-sm" (click)="eliminar(alumno)">ELIMINAR</button></td>
                     </tr>
                 </tbody>
             </table>
-            <button class="btn btn-primary btn-sm">CREAR</button>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" [checked]="automatico" id="flexCheckDefault" (click)="checkTocado()">
+                <label class="form-check-label" for="flexCheckDefault">
+                  Actualizar automáticamente
+                </label>
+              </div>
         </div>
     </div>
 </div>
