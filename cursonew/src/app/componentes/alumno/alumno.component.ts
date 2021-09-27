@@ -25,6 +25,7 @@ export class AlumnoComponent implements OnInit {
 
   ngOnInit(): void {
 
+    localStorage.setItem("almuno", "vale");
 
     /*let a1 : Alumno;
     a1 = new Alumno();

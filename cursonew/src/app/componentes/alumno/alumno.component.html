@@ -3,7 +3,7 @@
         
     </div>
     <div class="card-body">
-        <button class="btn btn-primary btn-sm">CREAR</button>
+        <button class="btn btn-primary btn-sm" routerLink="/alumnos/form">CREAR</button>
         <div class="alert alert-info" *ngIf="listaAlumnos && listaAlumnos.length==0">
             NO HAY ALUMNOS EN EL SISTEMA
         </div>
@@ -32,7 +32,7 @@
                         <!-- <td>{{alumno.creadoEn | date: 'MMMM d, y, h:mm:ss a z' }}</td> -->
                         <td>{{alumno.creadoEn | date: 'shortDate' }}</td>
                         <td>{{alumno.creadoEn | date: 'shortTime' }}</td>
-                        <td><button class="btn btn-secondary btn-sm">EDITAR</button></td>
+                        <td><button class="btn btn-secondary btn-sm" [routerLink]="['/alumnos/form', alumno.id]">EDITAR</button></td>
                         <td><button class="btn btn-danger btn-sm" (click)="eliminar(alumno)">ELIMINAR</button></td>
                     </tr>
                 </tbody>

@@ -5,17 +5,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AlumnoComponent } from './componentes/alumno/alumno.component';
 import { LayoutModule } from './layout/layout.module';
+import { AlumnoFormComponent } from './componentes/alumno/alumno-form.component';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    AlumnoComponent
+    AlumnoComponent,
+    AlumnoFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule, 
     LayoutModule, 
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
