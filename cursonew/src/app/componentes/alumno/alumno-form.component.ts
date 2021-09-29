@@ -29,11 +29,18 @@ export class AlumnoFormComponent implements OnInit {
         if (id != null)
         {
           console.log("Viene de editar");
-          //TODO OBTENER LOS DATOS 
+          let alumno_serializado = sessionStorage.getItem("alumno_en_edicion");
+          if (alumno_serializado!= null)
+          {
+            console.log("deserilizado ...");
+            this.alumno = JSON.parse(alumno_serializado);
+          }
+          
+          /*
           let n = parseInt(id);
           this.servicioalumno.getAlumno(n).subscribe ( respuesta => {
             this.alumno = respuesta.body as Alumno;
-          })
+          })*/
         } else {
           console.log("Viene de crear");
         }
@@ -48,14 +55,30 @@ export class AlumnoFormComponent implements OnInit {
       alumno_nuevo =>{console.log(alumno_nuevo)
       alert("Alumno creado con éxito");
       //this.router.navigate(['/alumnos']);
-      this.router.navigateByUrl('/alumnos')}
+      this.router.navigateByUrl('/alumnos');}
     )
   }
 
-  editar (a: Alumno)
+  editar ()
   {
-    console.log("modificar alumno " + a.nombre);
+    console.log("modificar alumno " + this.alumno.nombre);
     //TODO TERMINAR EL ACTULIZAR EN EL SERVIDOR
+    this.servicioalumno.actualizar(this.alumno).subscribe(
+      alumnoeditado => { 
+        alert ("Alumno modificado Correctamente");
+        this.router.navigateByUrl('/alumnos');
+      }
+        , error => { 
+          alert ("Error al actualizar");
+          console.log(error);
+        }
+    )
+  }
+
+  ngOnDestroy() {
+    console.log("saliendo ... limpio la session storage");
+    sessionStorage.clear();
+    
   }
 
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientJsonpModule, HttpClientModule} from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AlumnoComponent } from './componentes/alumno/alumno.component';
@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule, 
     LayoutModule, 
     HttpClientModule,
+    HttpClientJsonpModule,
     FormsModule
   ],
   providers: [],

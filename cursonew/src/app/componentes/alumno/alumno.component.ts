@@ -1,5 +1,6 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Alumno } from 'src/app/modelo/alumno';
 import { AlumnoserviceService } from 'src/app/servicios/alumnoservice.service';
 
@@ -18,7 +19,7 @@ export class AlumnoComponent implements OnInit {
   idinterval: any;
 
   //INYECCIÓN DE SERVICIOS
-  constructor(public servicio: AlumnoserviceService) {
+  constructor(public servicio: AlumnoserviceService, private router:Router) {
     this.listaAlumnos = [];
     this.automatico = false;
   }
@@ -49,6 +50,7 @@ export class AlumnoComponent implements OnInit {
       , fallo => {alert ("Fallo del servidor"); console.error(fallo)});*/
     //suscribirnos observadores
 
+    //DEVOLVEMOS UN JSON
     this.servicio.listarConHttpCompleto().subscribe(
       httpresp => {
         console.log(httpresp.status);
@@ -58,8 +60,35 @@ export class AlumnoComponent implements OnInit {
       }
       , fallo => { alert("Fallo del servidor"); console.error(fallo) });
     //suscribirnos observadores
+
+   this.servicio.listarJsonp().subscribe (
+      respuesta => {
+        console.log("respuesta JSONP servidor");
+        console.log(respuesta);
+        let alumno:Alumno = <Alumno>respuesta;
+        let alumno1:Alumno = respuesta as Alumno;
+        
+        console.log("Apellido = " + alumno.apellido);
+        console.log("Apellido 1= " + alumno1.apellido);
+        this.listaAlumnos.push(alumno);
+        
+      }
+      
+    )
   }
 
+  irAEditar(alumno : Alumno)
+  {
+    //TODO TENGO QUE TRANSITAR PROGRAMÁTICAMENTE  
+    //AL FORMULARIO ALUMNO-FORM PASÁNDLE ESTE ALUMNO POR LA MEMORIA DEL NAVEGADOR
+    
+    let alumno_json = JSON.stringify(alumno);//serializarlo
+    console.log(" alumno_json  = " + alumno_json );
+    sessionStorage.setItem("alumno_en_edicion", alumno_json);
+    this.router.navigate(['/alumnos/form', alumno.id]);
+
+
+  }
 
   checkTocado() {
 
@@ -71,6 +100,7 @@ export class AlumnoComponent implements OnInit {
       this.desprogramarActualizacionAutomatica();
     }
   }
+  //TODO:LLAMAR AL SERVICIO DE JSONP
 
   programarActualizacionAtutomatica() {
     this.idinterval = setInterval(() => {

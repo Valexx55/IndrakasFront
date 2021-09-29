@@ -57,4 +57,9 @@ export class AlumnoserviceService {
       return this.http.delete<void> (`${this.ruta_servidor}/${id}`);
     }
 
+    public listarJsonp ()
+    {
+      return this.http.jsonp(`${this.ruta_servidor}/jsonp/alumno`, 'callback=JSONP_CALLBACK');
+    }
+
 }

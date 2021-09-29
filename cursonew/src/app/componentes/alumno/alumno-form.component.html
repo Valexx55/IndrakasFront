@@ -4,7 +4,7 @@
     </div>
     <div class="card-body">
         <button class="btn btn-secondary my-2" routerLink="/alumnos">VOLVER</button>
-        <form #formulario_alumno="ngForm" (ngSubmit)="alumno.id? editar(formulario_alumno.value) : crear(formulario_alumno.value)">
+        <form #formulario_alumno="ngForm" (ngSubmit)="alumno.id? editar() : crear(formulario_alumno.value)">
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input class="form-control" type="text" #nombre="ngModel" name="nombre" [(ngModel)]="alumno.nombre"
