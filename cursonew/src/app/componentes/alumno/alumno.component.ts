@@ -51,7 +51,7 @@ export class AlumnoComponent implements OnInit {
     //suscribirnos observadores
 
     //DEVOLVEMOS UN JSON
-    this.servicio.listarConHttpCompleto().subscribe(
+  this.servicio.listarConHttpCompleto().subscribe(
       httpresp => {
         console.log(httpresp.status);
         this.listaAlumnos = <Alumno[]>httpresp.body;//casting
@@ -61,20 +61,20 @@ export class AlumnoComponent implements OnInit {
       , fallo => { alert("Fallo del servidor"); console.error(fallo) });
     //suscribirnos observadores
 
-   this.servicio.listarJsonp().subscribe (
-      respuesta => {
-        console.log("respuesta JSONP servidor");
-        console.log(respuesta);
-        let alumno:Alumno = <Alumno>respuesta;
-        let alumno1:Alumno = respuesta as Alumno;
+  //  this.servicio.listarJsonp().subscribe (
+  //     respuesta => {
+  //       console.log("respuesta JSONP servidor");
+  //       console.log(respuesta);
+  //       let alumno:Alumno = <Alumno>respuesta;
+  //       let alumno1:Alumno = respuesta as Alumno;
         
-        console.log("Apellido = " + alumno.apellido);
-        console.log("Apellido 1= " + alumno1.apellido);
-        this.listaAlumnos.push(alumno);
+  //       console.log("Apellido = " + alumno.apellido);
+  //       console.log("Apellido 1= " + alumno1.apellido);
+  //       this.listaAlumnos.push(alumno);
         
-      }
+  //     }
       
-    )
+  //   )
   }
 
   irAEditar(alumno : Alumno)

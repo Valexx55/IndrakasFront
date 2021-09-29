@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alumno } from 'src/app/modelo/alumno';
+import { ErrorValidacionServidor } from 'src/app/modelo/error-validacion-servidor';
 import { AlumnoserviceService } from 'src/app/servicios/alumnoservice.service';
 
 @Component({
@@ -55,7 +56,24 @@ export class AlumnoFormComponent implements OnInit {
       alumno_nuevo =>{console.log(alumno_nuevo)
       alert("Alumno creado con éxito");
       //this.router.navigate(['/alumnos']);
-      this.router.navigateByUrl('/alumnos');}
+      this.router.navigateByUrl('/alumnos');}, 
+      resperror => {
+        if (resperror.status == 400)
+        {
+          console.log("errores en la validación del servidor");
+          let lista_errores : Array<ErrorValidacionServidor> = resperror.error;
+          let erroralert : string = "";
+          lista_errores.forEach (
+            ee => {
+              erroralert = erroralert+ (ee.field + " " + ee.defaultMessage + " " + ee.objectName+"\n" ) ;
+              console.log(ee.field + " " + ee.defaultMessage + " " + ee.objectName);}
+          );
+              alert("Errores en la validación del servidor \n" + erroralert);
+          
+          
+        }
+
+      }
     )
   }
 
