@@ -1,6 +1,5 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Alumno } from 'src/app/modelo/alumno';
 import { AlumnoserviceService } from 'src/app/servicios/alumnoservice.service';
@@ -21,9 +20,6 @@ export class AlumnopaginaComponent implements OnInit {
   public totalPorPagina: number = 5;
   public paginaActual: number = 0;
   public pageSizeOptions: number  []= [5, 10, 15, 25];
-
-
-
   @ViewChild(MatPaginator) paginador:MatPaginator;
 
   //INYECCIÓN DE SERVICIOS
@@ -33,11 +29,7 @@ export class AlumnopaginaComponent implements OnInit {
    
   }
 
-  ngAfterViewInit ()
-  {
-    //MÉTODO QUE SE VA EJECUTAR DESPUÉS DE CARGAR LA PLANTILLA
-    this.paginador._intl.itemsPerPageLabel = "Registros por página";
-  }
+  
 
   ngOnInit(): void {
 
@@ -56,15 +48,56 @@ export class AlumnopaginaComponent implements OnInit {
     //suscribirnos observadores
 
     //DEVOLVEMOS UN JSON
-  this.servicio.listarConHttpCompleto().subscribe(
+  /*this.servicio.listarConHttpCompleto().subscribe(
       httpresp => {
         console.log(httpresp.status);
         this.listaAlumnos = <Alumno[]>httpresp.body;//casting
         //console.log(alumnos);
         //this.listaAlumnos = alumnos;
       }
-      , fallo => { alert("Fallo del servidor"); console.error(fallo) });
+      , fallo => { alert("Fallo del servidor"); console.error(fallo) });*/
+
+      this.obtenerPagina ();
    
+  }
+
+
+
+  obtenerPagina ()
+  {
+    this.servicio.listarPaginas(this.paginaActual+'' , this.totalPorPagina+'').subscribe
+    (
+      
+        respuesta => {
+          this.listaAlumnos= respuesta.content as Alumno[];
+          this.totalRegistros = respuesta.totalElements as number;
+          console.log ("long lista = " + this.listaAlumnos.length + " total registros " + this.totalRegistros);
+         //this.paginador._intl.itemsPerPageLabel = "Registros por página";
+        }
+      
+    )
+
+  }
+
+  paginar (evento :PageEvent)
+  {
+    this.paginaActual= evento.pageIndex;
+    this.totalPorPagina = evento.pageSize;
+    this.obtenerPagina();
+
+  }
+
+  
+
+  ngAfterViewInit() {
+   
+    // this returns null
+    this.paginador._intl.itemsPerPageLabel = "Registros por página";
+    this.paginador._intl.nextPageLabel = "Siguiente ";
+    this.paginador._intl.previousPageLabel = "Anterior ";
+    this.paginador._intl.firstPageLabel = "Primera página";
+    this.paginador._intl.lastPageLabel = "Última página";
+        //this.paginador._intl.changes
   }
 
   irAEditar(alumno : Alumno)
