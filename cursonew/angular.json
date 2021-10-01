@@ -13,10 +13,17 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "es": "src/locale/messages.es.xlf"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize":false,
             "outputPath": "dist/cursonew",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -27,13 +34,18 @@
               "src/assets"
             ],
             "styles": [ 
-              "src/styles.css", "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css", "src/styles.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": ["./node_modules/jquery/dist/jquery.slim.min.js", 
               "./node_modules/popper.js/dist/umd/popper.min.js", 
               "./node_modules/bootstrap/dist/js/bootstrap.min.js"]
           },
           "configurations": {
+            "es":{
+              "localize": ["es"],
+              "baseHref": "/es/"
+            },
             "production": {
               "budgets": [
                 {
@@ -74,6 +86,9 @@
             },
             "development": {
               "browserTarget": "cursonew:build:development"
+            },
+            "es": {
+              "browserTarget": "cursonew:build:es"
             }
           },
           "defaultConfiguration": "development"
@@ -96,7 +111,8 @@
               "src/assets"
             ],
             "styles": [ 
-              "src/styles.css", "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css", "src/styles.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": ["./node_modules/jquery/dist/jquery.slim.min.js", 
               "./node_modules/popper.js/dist/umd/popper.min.js", 

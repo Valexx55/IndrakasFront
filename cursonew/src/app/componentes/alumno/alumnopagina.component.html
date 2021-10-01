@@ -1,7 +1,5 @@
 <div class="card bg-light mb-3">
-    <h1 i18n>TESTING i18n ANGULAR</h1>
     <div class="card-header">{{titulo}}
-        
     </div>
     <div class="card-body">
         <button class="btn btn-primary btn-sm" routerLink="/alumnos/form">CREAR</button>
@@ -40,12 +38,20 @@
                 </tbody>
             </table>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" [checked]="automatico" id="flexCheckDefault" (click)="checkTocado()">
+                <input class="form-check-input" type="checkbox" value="" [checked]="automatico" id="flexCheckDefault"
+                    (click)="checkTocado()">
                 <label class="form-check-label" for="flexCheckDefault">
-                  Actualizar automáticamente
+                    Actualizar automáticamente
                 </label>
-              </div>
+            </div>
+            <mat-paginator 
+                [length]="totalRegistros" 
+                [pageSize]="totalPorPagina" 
+                [pageIndex]="paginaActual"
+                [pageSizeOptions]="pageSizeOptions" 
+                aria-label="Select page">
+            </mat-paginator>
+
         </div>
     </div>
 </div>
-

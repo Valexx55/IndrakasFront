@@ -9,13 +9,16 @@ import { AlumnoFormComponent } from './componentes/alumno/alumno-form.component'
 import { FormsModule } from '@angular/forms';
 import { MiinterceptorService } from './servicios/miinterceptor.service';
 import { Miinterceptor2Service } from './servicios/miinterceptor2.service';
-
+import { AlumnopaginaComponent } from './componentes/alumno/alumnopagina.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
     AppComponent,
     AlumnoComponent,
-    AlumnoFormComponent
+    AlumnoFormComponent,
+    AlumnopaginaComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,9 @@ import { Miinterceptor2Service } from './servicios/miinterceptor2.service';
     LayoutModule, 
     HttpClientModule,
     HttpClientJsonpModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatPaginatorModule
   ],
   providers: [
     //aquí puedo definir varios interceptores y su orden declarativo, determina su orden de ejecución

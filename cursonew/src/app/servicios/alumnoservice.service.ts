@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Alumno } from '../modelo/alumno';
@@ -60,6 +60,13 @@ export class AlumnoserviceService {
     public listarJsonp ()
     {
       return this.http.jsonp(`${this.ruta_servidor}/jsonp/alumno`, 'callback=JSONP_CALLBACK');
+    }
+
+    public listarPaginas (page:string, size:string): Observable<any>
+    {
+      let parametros = new HttpParams().set('page', page).set('size', size);
+      return this.http.get<any>(`${this.ruta_servidor}/pagina`, {params:parametros});
+
     }
 
 }
