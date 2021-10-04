@@ -11,6 +11,8 @@ import { AlumnoserviceService } from 'src/app/servicios/alumnoservice.service';
 })
 export class AlumnoFormComponent implements OnInit {
 
+  fotoSeleccionada : File | null;//de tipo JS UNION TYPE
+  //fotoSeleccionada : File;//de tipo JS UNION TYPE
   titulo: string = "FORMULARIO ALUMNO";
   alumno : Alumno = new Alumno (); //alumnno nuevo o en edición
 
@@ -51,12 +53,49 @@ export class AlumnoFormComponent implements OnInit {
 
   crear (a : Alumno)
   {
-    console.log("insertar alumno " + a.nombre);
-    this.servicioalumno.crear(a).subscribe (
+    if (this.fotoSeleccionada!=null)
+    {
+      this.crearConFoto(a , this.fotoSeleccionada);
+
+    } 
+    else{
+      this.crearSinFoto(a);
+    }
+  }
+
+  crearSinFoto (a : Alumno)
+  {
+  console.log("insertar alumno SIN FOTO " + a.nombre);
+  this.servicioalumno.crear(a).subscribe (
+    alumno_nuevo =>{console.log(alumno_nuevo)
+    alert("Alumno creado con éxito");
+    //this.router.navigate(['/alumnos']);
+    this.router.navigateByUrl('/alumnos');}, 
+    resperror => {
+      if (resperror.status == 400)
+      {
+        console.log("errores en la validación del servidor");
+        let lista_errores : Array<ErrorValidacionServidor> = resperror.error;
+        let erroralert : string = "";
+        lista_errores.forEach (
+          ee => {
+            erroralert = erroralert+ (ee.field + " " + ee.defaultMessage + " " + ee.objectName+"\n" ) ;
+            console.log(ee.field + " " + ee.defaultMessage + " " + ee.objectName);}
+        );
+            alert("Errores en la validación del servidor \n" + erroralert);
+      }
+    }
+  )
+
+  }
+  crearConFoto (a : Alumno, foto: File)
+  {
+    console.log("insertar alumno CON FOTO " + a.nombre);
+    this.servicioalumno.crearConFoto(a, foto).subscribe (
       alumno_nuevo =>{console.log(alumno_nuevo)
       alert("Alumno creado con éxito");
       //this.router.navigate(['/alumnos']);
-      this.router.navigateByUrl('/alumnos');}, 
+      this.router.navigateByUrl('/alumnospag');}, 
       resperror => {
         if (resperror.status == 400)
         {
@@ -69,17 +108,42 @@ export class AlumnoFormComponent implements OnInit {
               console.log(ee.field + " " + ee.defaultMessage + " " + ee.objectName);}
           );
               alert("Errores en la validación del servidor \n" + erroralert);
-          
-          
         }
-
       }
     )
   }
 
   editar ()
   {
-    console.log("modificar alumno " + this.alumno.nombre);
+    if (this.fotoSeleccionada!=null)
+    {
+      this.editarConFoto(this.fotoSeleccionada);
+
+    } 
+    else{
+      this.editarSinFoto();
+    }
+  }
+
+  editarConFoto (foto:File)
+  {
+    console.log("modificar alumno CON FOTO " + this.alumno.nombre);
+    //TODO TERMINAR EL ACTULIZAR EN EL SERVIDOR
+    this.servicioalumno.actualizarConFoto(this.alumno, foto).subscribe(
+      alumnoeditado => { 
+        alert ("Alumno modificado Correctamente");
+        this.router.navigateByUrl('/alumnospag');
+      }
+        , error => { 
+          alert ("Error al actualizar");
+          console.log(error);
+        }
+    )
+  }
+
+  editarSinFoto ()
+  {
+    console.log("modificar alumno SIN FOTO " + this.alumno.nombre);
     //TODO TERMINAR EL ACTULIZAR EN EL SERVIDOR
     this.servicioalumno.actualizar(this.alumno).subscribe(
       alumnoeditado => { 
@@ -96,6 +160,22 @@ export class AlumnoFormComponent implements OnInit {
   ngOnDestroy() {
     console.log("saliendo ... limpio la session storage");
     sessionStorage.clear();
+    
+  }
+
+  seleccionarFoto(event :any)
+  {
+    this.fotoSeleccionada = event.target.files[0];
+    //comprobar el tipo mime
+    if (this.fotoSeleccionada!=null)
+    {
+      console.log("TIPO ARCHIVO = " +this.fotoSeleccionada.type);
+      if (this.fotoSeleccionada.type.indexOf('image')<0)
+      {
+        alert("El archivo seleccionado debe ser una foto");
+        this.fotoSeleccionada = null;//si el tipo no es correcto, que se guarde a null
+      }
+    }
     
   }
 

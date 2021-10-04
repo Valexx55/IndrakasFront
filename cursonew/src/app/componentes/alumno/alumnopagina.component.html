@@ -24,7 +24,15 @@
                     <tr *ngFor="let alumno of listaAlumnos">
                         <td>{{alumno.id}}</td>
                         <td>
-                            <img 
+
+                            <!--[src]="'http://localhost:8080/obtenerfoto/' +alumno.id"-->
+                            <img *ngIf="alumno.fotoHashCode"
+                            [src]="'http://localhost:8080/obtenerfoto/' +alumno.id + '?fotoHashCode=' + alumno.fotoHashCode"
+                            
+                            class="img-thumbnail rounded"
+                            style="width: 64px;"
+                            >
+                            <img *ngIf="!alumno.fotoHashCode"
                             [src]="'/assets/sin-foto.png'"
                             class="img-thumbnail rounded"
                             style="width: 64px;"

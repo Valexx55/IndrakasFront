@@ -68,5 +68,31 @@ export class AlumnoserviceService {
       return this.http.get<any>(`${this.ruta_servidor}/pagina`, {params:parametros});
 
     }
+    
+    public crearConFoto (alumno : Alumno, archivo: File):Observable<Alumno>
+    {
+      let formData = new FormData();//el cuerpo de la petición multipart FILE
+      formData.append('archivo', archivo);
+      formData.append('nombre', alumno.nombre);
+      formData.append('apellido', alumno.apellido);
+      formData.append('edad', alumno.edad+"");
+      formData.append('email', alumno.email);
 
+      return this.http.post<Alumno>(`${this.ruta_servidor}/crear-con-foto`, formData);
+      //return this.http.post<Alumno>(this.ruta_servidor + "/crear-con-foto", formData);
+
+    }
+
+    public actualizarConFoto (alumno : Alumno, archivo: File):Observable<Alumno>
+    {
+      let formData = new FormData();//el cuerpo de la petición multipart FILE
+      formData.append('archivo', archivo);
+      formData.append('nombre', alumno.nombre);
+      formData.append('apellido', alumno.apellido);
+      formData.append('edad', alumno.edad+"");
+      formData.append('email', alumno.email);
+
+      return this.http.put<Alumno>(`${this.ruta_servidor}/editar-con-foto/${alumno.id}`, formData);
+
+    }
 }
