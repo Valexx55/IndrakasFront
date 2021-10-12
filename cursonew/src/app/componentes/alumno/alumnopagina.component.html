@@ -25,9 +25,11 @@
                         <td>{{alumno.id}}</td>
                         <td>
 
-                            <!--[src]="'http://localhost:8080/obtenerfoto/' +alumno.id"-->
+                            <!--[src]="'http://localhost:8080/obtenerfoto/' +alumno.id"
+                            [src]="'http://localhost:8090/api/alumnos/obtenerfoto/' +alumno.id + '?fotoHashCode=' + alumno.fotoHashCode"-->
                             <img *ngIf="alumno.fotoHashCode"
-                            [src]="'http://localhost:8080/obtenerfoto/' +alumno.id + '?fotoHashCode=' + alumno.fotoHashCode"
+                            
+                            [src]="ruta_serv_fotos +alumno.id + '?fotoHashCode=' + alumno.fotoHashCode"
                             
                             class="img-thumbnail rounded"
                             style="width: 64px;"

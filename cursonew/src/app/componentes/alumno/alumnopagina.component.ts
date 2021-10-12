@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { RUTA_GATEWAY } from 'src/app/config/app';
 import { Alumno } from 'src/app/modelo/alumno';
 import { AlumnoserviceService } from 'src/app/servicios/alumnoservice.service';
 
@@ -15,6 +16,7 @@ export class AlumnopaginaComponent implements OnInit {
   titulo: string = "LISTADO DE ALUMNOS";
   automatico: boolean;
   idinterval: any;
+  ruta_serv_fotos : string = RUTA_GATEWAY+'obtenerfoto/';
 
   public totalRegistros: number = 0;
   public totalPorPagina: number = 5;
@@ -33,31 +35,7 @@ export class AlumnopaginaComponent implements OnInit {
 
   ngOnInit(): void {
 
-    localStorage.setItem("almuno", "vale");
-
-   
-    //yo me suscribo al observable
-    //y cuando el observable cambie de estado - la lista está disponible 
-    //se invoca al método suscribe
-    /*this.servicio.listar().subscribe(
-      alumnos => {
-        console.log(alumnos);
-        this.listaAlumnos = alumnos;
-      }
-      , fallo => {alert ("Fallo del servidor"); console.error(fallo)});*/
-    //suscribirnos observadores
-
-    //DEVOLVEMOS UN JSON
-  /*this.servicio.listarConHttpCompleto().subscribe(
-      httpresp => {
-        console.log(httpresp.status);
-        this.listaAlumnos = <Alumno[]>httpresp.body;//casting
-        //console.log(alumnos);
-        //this.listaAlumnos = alumnos;
-      }
-      , fallo => { alert("Fallo del servidor"); console.error(fallo) });*/
-
-      this.obtenerPagina ();
+    this.obtenerPagina ();
    
   }
 
@@ -72,7 +50,6 @@ export class AlumnopaginaComponent implements OnInit {
           this.listaAlumnos= respuesta.content as Alumno[];
           this.totalRegistros = respuesta.totalElements as number;
           console.log ("long lista = " + this.listaAlumnos.length + " total registros " + this.totalRegistros);
-         //this.paginador._intl.itemsPerPageLabel = "Registros por página";
         }
       
     )
@@ -91,13 +68,11 @@ export class AlumnopaginaComponent implements OnInit {
 
   ngAfterViewInit() {
    
-    // this returns null
     this.paginador._intl.itemsPerPageLabel = "Registros por página";
     this.paginador._intl.nextPageLabel = "Siguiente ";
     this.paginador._intl.previousPageLabel = "Anterior ";
     this.paginador._intl.firstPageLabel = "Primera página";
     this.paginador._intl.lastPageLabel = "Última página";
-        //this.paginador._intl.changes
   }
 
   irAEditar(alumno : Alumno)
@@ -143,7 +118,7 @@ export class AlumnopaginaComponent implements OnInit {
     console.log("quiere eliminar a " + alumno.nombre);
     if (confirm("¿Quieres eliminar a " + alumno.nombre)) {
       //sí
-      this.servicio.eliminar(alumno.id).subscribe(() => {
+      this.servicio.eliminarCifrado(alumno.id).subscribe(() => {
         //ACTUALIZAR LA LISTA
         this.listaAlumnos = this.listaAlumnos.filter(a => a.id != alumno.id);
         alert("Alumno elminado con éxito");

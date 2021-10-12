@@ -34,7 +34,7 @@ export class MiinterceptorService implements HttpInterceptor{
 }
   private mostrarCuerpo (cuerpo:any)
   {
-    console.log("cuerpo RX " + cuerpo);
+    console.log("cuerpo RX " + cuerpo.toString());
   }
 
   private modificarCuerpo (cuerpo:any)

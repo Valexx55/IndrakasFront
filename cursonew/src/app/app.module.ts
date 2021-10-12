@@ -12,13 +12,14 @@ import { Miinterceptor2Service } from './servicios/miinterceptor2.service';
 import { AlumnopaginaComponent } from './componentes/alumno/alumnopagina.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
     AppComponent,
     AlumnoComponent,
     AlumnoFormComponent,
-    AlumnopaginaComponent
+    AlumnopaginaComponent, 
   ],
   imports: [
     BrowserModule,
@@ -28,7 +29,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     HttpClientJsonpModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FontAwesomeModule
   ],
   providers: [
     //aquí puedo definir varios interceptores y su orden declarativo, determina su orden de ejecución

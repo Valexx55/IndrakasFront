@@ -22,9 +22,7 @@ export class AlumnoFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let valor = localStorage.getItem("almuno");
-    console.log("VAlor pasado = " + valor);
-
+    
     //TODO_ OBTENER EL ID DE LA RUTA
     this.ruta.paramMap.subscribe (
       param => {
@@ -39,6 +37,7 @@ export class AlumnoFormComponent implements OnInit {
             this.alumno = JSON.parse(alumno_serializado);
           }
           
+          //ALTERNATIVA PARA CARGAR DESDE REMOTO EL USUARIO A EDITAR
           /*
           let n = parseInt(id);
           this.servicioalumno.getAlumno(n).subscribe ( respuesta => {
@@ -69,7 +68,6 @@ export class AlumnoFormComponent implements OnInit {
   this.servicioalumno.crear(a).subscribe (
     alumno_nuevo =>{console.log(alumno_nuevo)
     alert("Alumno creado con éxito");
-    //this.router.navigate(['/alumnos']);
     this.router.navigateByUrl('/alumnos');}, 
     resperror => {
       if (resperror.status == 400)
@@ -94,7 +92,6 @@ export class AlumnoFormComponent implements OnInit {
     this.servicioalumno.crearConFoto(a, foto).subscribe (
       alumno_nuevo =>{console.log(alumno_nuevo)
       alert("Alumno creado con éxito");
-      //this.router.navigate(['/alumnos']);
       this.router.navigateByUrl('/alumnospag');}, 
       resperror => {
         if (resperror.status == 400)
@@ -125,10 +122,10 @@ export class AlumnoFormComponent implements OnInit {
     }
   }
 
+  //TODO: EN LOS MÉTODOS DE EDICIÓN, NO SE VALIDA LA RESPUSTA DEL SERVIDOR. ESTARÍA BIEN DEFINIR @VALID EN EL SERVIDOR Y HACER COMO EN LOS MÉTODOS DE CREAR/POST
   editarConFoto (foto:File)
   {
     console.log("modificar alumno CON FOTO " + this.alumno.nombre);
-    //TODO TERMINAR EL ACTULIZAR EN EL SERVIDOR
     this.servicioalumno.actualizarConFoto(this.alumno, foto).subscribe(
       alumnoeditado => { 
         alert ("Alumno modificado Correctamente");
@@ -144,7 +141,6 @@ export class AlumnoFormComponent implements OnInit {
   editarSinFoto ()
   {
     console.log("modificar alumno SIN FOTO " + this.alumno.nombre);
-    //TODO TERMINAR EL ACTULIZAR EN EL SERVIDOR
     this.servicioalumno.actualizar(this.alumno).subscribe(
       alumnoeditado => { 
         alert ("Alumno modificado Correctamente");
@@ -166,7 +162,7 @@ export class AlumnoFormComponent implements OnInit {
   seleccionarFoto(event :any)
   {
     this.fotoSeleccionada = event.target.files[0];
-    //comprobar el tipo mime
+    //comprobamos el tipo mime del adjunto
     if (this.fotoSeleccionada!=null)
     {
       console.log("TIPO ARCHIVO = " +this.fotoSeleccionada.type);
